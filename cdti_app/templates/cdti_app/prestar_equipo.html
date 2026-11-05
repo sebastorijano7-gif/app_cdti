@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestar Equipo - CDTI</title>
+    <style>
+        :root { --sena-green: #39A900; --sena-blue: #00324D; --ios-bg: #F2F2F7; --card-bg: #FFFFFF; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; }
+        body { background-color: var(--ios-bg); color: #1C1C1E; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: var(--card-bg); width: 100%; max-width: 400px; border-radius: 24px; padding: 30px 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+        .header-box { text-align: center; margin-bottom: 20px; }
+        .sena-logo { width: 45px; margin-bottom: 10px; }
+        h1 { color: var(--sena-blue); font-size: 20px; font-weight: 700; }
+        .error-msg { background: rgba(255, 59, 48, 0.1); color: #FF3B30; padding: 10px; border-radius: 10px; font-size: 13px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: #6C6C70; margin-bottom: 5px; text-transform: uppercase; }
+        input { width: 100%; padding: 12px 14px; background-color: #F2F2F7; border: 1px solid transparent; border-radius: 12px; font-size: 15px; outline: none; }
+        input:focus { background-color: #FFF; border-color: var(--sena-green); }
+        button { width: 100%; padding: 14px; background-color: var(--sena-green); color: #FFF; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .back-link { display: block; text-align: center; margin-top: 18px; color: var(--sena-blue); text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg" alt="SENA" class="sena-logo">
+            <h1>Registro de Préstamo</h1>
+        </div>
+        {% if error %}
+            <div class="error-msg">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="serial">Placa / Serial del Equipo</label>
+                <input type="text" id="serial" name="serial" placeholder="Ej. PORT-001 o REG-002" required>
+            </div>
+            <div class="form-group">
+                <label for="documento">Documento Aprendiz</label>
+                <input type="text" id="documento" name="documento" placeholder="Ej. 1005123456" required>
+            </div>
+            <div class="form-group">
+                <label for="ambiente">Ambiente CDTI</label>
+                <input type="text" id="ambiente" name="ambiente" placeholder="Ej. Ambiente 204" required>
+            </div>
+            <button type="submit">Registrar Préstamo</button>
+        </form>
+        <a href="/cdti/equipos/" class="back-link">← Volver al listado</a>
+    </div>
+</body>
+</html>

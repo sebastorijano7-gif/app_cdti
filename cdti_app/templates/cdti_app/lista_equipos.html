@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipos TIC - CDTI</title>
+    <style>
+        :root { --sena-green: #39A900; --sena-blue: #00324D; --ios-bg: #F2F2F7; --card-bg: #FFFFFF; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; }
+        body { background-color: var(--ios-bg); color: #1C1C1E; display: flex; justify-content: center; padding: 30px 20px; }
+        .container { width: 100%; max-width: 440px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .title-box { display: flex; align-items: center; gap: 10px; }
+        .sena-logo { width: 32px; height: auto; }
+        h1 { color: var(--sena-blue); font-size: 20px; font-weight: 700; }
+        .btn-add { background-color: var(--sena-green); color: white; text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 20px; }
+        .list-group { background-color: var(--card-bg); border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+        .list-item { padding: 16px 20px; border-bottom: 1px solid #E5E5EA; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; }
+        .list-item:last-child { border-bottom: none; }
+        .item-info h2 { font-size: 16px; font-weight: 600; }
+        .item-info p { font-size: 13px; color: #8E8E93; }
+        .badge { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 10px; }
+        .disponible { background-color: rgba(57, 169, 0, 0.12); color: var(--sena-green); }
+        .prestado { background-color: rgba(255, 59, 48, 0.12); color: #FF3B30; }
+        .empty { padding: 30px; text-align: center; color: #8E8E93; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg" alt="SENA" class="sena-logo">
+                <h1>Equipos TIC CDTI</h1>
+            </div>
+            <a href="/cdti/prestar/" class="btn-add">+ Prestar</a>
+        </div>
+        <div class="list-group">
+            {% for equipo in equipos %}
+                <a href="/cdti/equipo/{{ equipo.id }}/" class="list-item">
+                    <div class="item-info">
+                        <h2>{{ equipo.tipo }}</h2>
+                        <p>Serial: {{ equipo.serial }}</p>
+                    </div>
+                    <span class="badge {% if equipo.estado == 'Disponible' %}disponible{% else %}prestado{% endif %}">
+                        {{ equipo.estado }}
+                    </span>
+                </a>
+            {% empty %}
+                <div class="empty">No hay equipos registrados en el sistema.</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
